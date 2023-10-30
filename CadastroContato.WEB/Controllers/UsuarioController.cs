@@ -79,13 +79,45 @@ namespace CadastroContato.WEB.Controllers
             }
         }
 
-        public IActionResult Create()
+		public async Task<IActionResult> Editar(int id)
+		{
+			ViewModel usuario = await Pesquisar(id);
+			return View(usuario);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Editar([Bind("Id, Nome, Email, Celular")] ViewModel usuario)
+		{
+			try
+			{
+				string json = JsonConvert.SerializeObject(usuario);
+				byte[] buffer = Encoding.UTF8.GetBytes(json);
+				ByteArrayContent byteContent = new ByteArrayContent(buffer);
+				byteContent.Headers.ContentType =
+					new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+				string url = ENDPOINT;
+				HttpResponseMessage response = await httpClient.PutAsync (url, byteContent);
+
+                if (!response.IsSuccessStatusCode)
+					ModelState.AddModelError(null, "Erro ao processar solicitação");
+
+				return RedirectToAction("Index");
+
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+
+		public IActionResult Criar()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task <IActionResult> Create([Bind("Nome, Email, Celular")] ViewModel usuario) 
+        public async Task <IActionResult> Criar([Bind("Nome, Email, Celular")] ViewModel usuario) 
         {
             try
             {
@@ -110,9 +142,30 @@ namespace CadastroContato.WEB.Controllers
 
                 throw ex;
             }
-
-
-            return View();
+          
         }
+
+        public async Task<IActionResult> Deletar (int id)
+        {
+            ViewModel usuario = await Pesquisar(id);
+            if(usuario == null)
+                return NotFound();  
+            return View(usuario);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Deletar(string Id)
+        {
+            int id = Int32.Parse(Id);
+            string url = $"{ENDPOINT}{Id}";
+            HttpResponseMessage response = await httpClient.DeleteAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+                ModelState.AddModelError(null, "Erro ao processar solicitação");
+
+            return RedirectToAction("Index");
+        }
+
+      
     }
 }

@@ -1,4 +1,5 @@
-﻿namespace CadastroContato.WEB.Models
+﻿
+namespace CadastroContato.WEB.Models
 {
     public class ViewModel
     {

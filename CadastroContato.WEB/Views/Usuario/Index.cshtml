@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CadastroContato.WEB.Models.ViewModel>
 
 <p>
-    <a asp-action="Create">Novo</a>
+    <a asp-action="Criar">Novo</a>
 </p>
 <table class="table">
     <thead>
@@ -37,9 +37,9 @@
                 @Html.DisplayFor(modelItem => item.Celular)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Editar", "Editar", new { id = item.Id}) |
                 @Html.ActionLink("Detalhes", "Detalhar", new {id = item.Id}) |
-                @Html.ActionLink("Excluir", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Excluir", "Deletar", new {id = item.Id })
             </td>
         </tr>
 }
