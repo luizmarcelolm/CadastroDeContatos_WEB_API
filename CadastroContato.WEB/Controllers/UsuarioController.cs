@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
+using System.Security.Policy;
 using System.Text;
 
 namespace CadastroContato.WEB.Controllers
@@ -96,8 +97,8 @@ namespace CadastroContato.WEB.Controllers
 				byteContent.Headers.ContentType =
 					new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-				string url = ENDPOINT;
-				HttpResponseMessage response = await httpClient.PutAsync (url, byteContent);
+                string url = ENDPOINT;
+                HttpResponseMessage response = await httpClient.PutAsync (url, byteContent);
 
                 if (!response.IsSuccessStatusCode)
 					ModelState.AddModelError(null, "Erro ao processar solicitação");
