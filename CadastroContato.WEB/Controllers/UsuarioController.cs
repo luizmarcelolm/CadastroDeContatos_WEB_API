@@ -1,5 +1,6 @@
 ﻿using CadastroContato.WEB.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
 using System.Security.Policy;
@@ -17,6 +18,7 @@ namespace CadastroContato.WEB.Controllers
             httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(ENDPOINT);
         }
+
         public async Task <IActionResult> Index()
         {
             try
@@ -86,31 +88,34 @@ namespace CadastroContato.WEB.Controllers
 			return View(usuario);
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> Editar([Bind("Id, Nome, Email, Celular")] ViewModel usuario)
-		{
-			try
-			{
-				string json = JsonConvert.SerializeObject(usuario);
-				byte[] buffer = Encoding.UTF8.GetBytes(json);
-				ByteArrayContent byteContent = new ByteArrayContent(buffer);
-				byteContent.Headers.ContentType =
-					new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+        [HttpPost]
+        public async Task<IActionResult> Editar([Bind("Id, Nome, Email, Celular")] ViewModel usuario)
+        {
+            try
+                {
+                    int id = usuario.Id;
+                    string json = JsonConvert.SerializeObject(usuario);
+                    byte[] buffer = Encoding.UTF8.GetBytes(json);
+                    ByteArrayContent byteContent = new ByteArrayContent(buffer);
+                    byteContent.Headers.ContentType =
+                        new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-                string url = ENDPOINT;
-                HttpResponseMessage response = await httpClient.PutAsync (url, byteContent);
+                string url = $"{ENDPOINT}{id}";
+                HttpResponseMessage response = await httpClient.PutAsync(url, byteContent);
+                    
 
                 if (!response.IsSuccessStatusCode)
-					ModelState.AddModelError(null, "Erro ao processar solicitação");
+                        ModelState.AddModelError(null, "Erro ao processar solicitação");
 
-				return RedirectToAction("Index");
+                    return RedirectToAction("Index");
 
-			}
-			catch (Exception)
-			{
-				throw;
-			}
-		}
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+            }
 
 		public IActionResult Criar()
         {
