@@ -1,6 +1,6 @@
 # Aplicação WEB/API para cadastro
 # Nesse projeto foi utilizado asp.net mvc e o entity framework para criação das views e banco de dados no mySQL.
-# As validações dos dados foi feita diretamente na model WEB com DataAnnotations.
+# As validações dos dados foram feitas diretamente na model WEB com DataAnnotations.
 # A API é conectada com o banco e a WEB consome as informações dela.
 # Para ficar mais fácil oacesso das informações do banco foi criado um CRUD para acessar os dados do banco.
 
