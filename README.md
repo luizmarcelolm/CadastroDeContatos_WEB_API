@@ -2,7 +2,12 @@
 # Nesse projeto foi utilizado asp.net mvc e o entity framework para criação das views e banco de dados no mySQL.
 # As validações dos dados foram feitas diretamente na model WEB com DataAnnotations.
 # A API é conectada com o banco e a WEB consome as informações dela.
-# Para ficar mais fácil oacesso das informações do banco foi criado um CRUD para acessar os dados do banco.
+# Para ficar mais fácil o acesso das informações do banco foi criado um CRUD para acessar os dados do banco.
+
+* Para esse projeto foi utilizado:
+  - asp.net mvc
+  - mysql
+  - bootstrap
 
 *Validações dos campos.
 ![image](https://github.com/luizmarcelolm/CadastroDeContatos_WEB_API/assets/109484017/0d9506ea-4fc9-4238-b990-7e44c6095bfe)
